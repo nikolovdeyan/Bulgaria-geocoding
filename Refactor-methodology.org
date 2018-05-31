@@ -1,0 +1,52 @@
+
+* Refactor Methodology
+This sheet describes all changes that were made to the `Geocoding Resources for Bulgaria` data set in order to improve its characteristics.
+
+** Refactor Plan
+1. Topology Fixes
+2. Administrative Layers Refactor
+
+** Toplogy Fixes
+** Administrative Layers Refactor
+*** Settlements Layer
+#+CAPTION: Attribute Table Fields for settlements.geojson
+|-------------------+-----------+--------------------------------------------------------------------|
+| Field             | Data Type | Contains                                                           |
+|-------------------+-----------+--------------------------------------------------------------------|
+| EKATTE_ID         | Integer   | The ID given to this administrative unit in EKATTE.                |
+| NAME_BG           | String    | The name of this administrative unit in Bulgarian.                 |
+| NAME_EN           | String    | The transliterated name of this administrative unit.               |
+| TYPE_BG           | String    | The type of settlement in Bulgarian (village, town).               |
+| TYPE_EN           | String    | The type of settlement in English.                                 |
+| PROVINCE_CODE     | String    | The code of the Oblast (Province) this settlement belongs to.      |
+| MUNICIPALITY_CODE | String    | The code of the Obstina (Municipality) this settlement belongs to. |
+| contains          | String    | ...                                                                |
+|                   |           |                                                                    |
+|-------------------+-----------+--------------------------------------------------------------------|
+
+*** Municipalities Layer
+#+CAPTION: Attribute Table Fields for municipalities.geojson
+|-------------------+-----------+-----------------------------------------------------------------|
+| Field             | Data Type | Contains                                                        |
+|-------------------+-----------+-----------------------------------------------------------------|
+| EKATTE_ID         | Integer   | The ID given to this administrative unit in EKATTE.             |
+| NAME_BG           | String    | The name of this administrative unit in Bulgarian.              |
+| NAME_EN           | String    | The transliterated name of this administrative unit.            |
+| PROVINCE_CODE     | String    | The code of the Oblast (Province) this municipality belongs to. |
+| MUNICIPALITY_CODE | String    | The code of the Obstina (Municipality).                         |
+|-------------------+-----------+-----------------------------------------------------------------|
+
+*** Provinces Layer
+#+CAPTION: Attribute Table Fields for municipalities.geojson
+|---------------+-----------+------------------------------------------------------|
+| Field         | Data Type | Contains                                             |
+|---------------+-----------+------------------------------------------------------|
+| EKATTE_ID     | Integer   | The ID given to this administrative unit in EKATTE   |
+| NAME_BG       | String    | The name of this administrative unit in Bulgarian    |
+| NAME_EN       | String    | The transliterated name of this administrative unit  |
+| PROVINCE_CODE | String    | The code of the Oblast (Province)                    |
+| NUTS_3_CODE   | String    | The code of this Oblast (Province) according to NUTS |
+|---------------+-----------+------------------------------------------------------|
+
+*** NUTS Levels 0-3 Layers
+** EKATTE Align Refactor
