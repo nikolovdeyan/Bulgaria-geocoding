@@ -4,28 +4,35 @@
 This sheet provides an overview and log for the fixes that were made to the Bulgaria Mapping Dataset after the fork from [[https://github.com/yurukov/Bulgaria-geocoding]].
 
 *** Why fixing it?
-*** What needed fixing?
++ *Because fixes were needed* -- The original source used for the generation of the generalized polygons for the settlement borders has many issues, most importantly it is old (many changes not reflected) and it breaks multiple topology rules.
++ *Because such sources are needed* -- The ineptitude and unwillingness of the Bulgarian institutions to provide geospatial data is legendary.
++ *Because I can do it* -- Having over ten years of experience wrangling geospatial data allows me to do the fixes relatively quickly and without much trouble.
+
 *** Benefits provided by this fix
-- Perfect alignment of administrative boundaries between features in the same layer. Each administrative polygon layer complies with the rules =Must not have Gaps=, =Must Not Overlap=.
-- Perfect alignment of administrative boundaries between features in different layers. This is the result of generating the admin layers with a /bottom-up/ approach, merging features from the lower administrative level to provide the higher one, e.g. merging settlements with the same municipality code is used to generate the features for the municipality layer.
-- Consistency in the structure of the administrative levels by providing a .geojson file for each of the recognized administrative levels:
-|------------------------+----------------------------------------+--------|
-| Administrative Level   | Description                            |  Count |
-|------------------------+----------------------------------------+--------|
-| Country                | Country                                |      1 |
-| NUTS 1                 | Райони (Regions)                       |      2 |
-| NUTS 2                 | Райони за планиране (Planning Regions) |      6 |
-| NUTS 3 / Provinces     | Области (Provinces)                    |     28 |
-| LAU 1 / Municipalities | Общини (Municipalities)                |    265 |
-| LAU 2 / Settlements    | Землища                                | /5329??/ |
-|------------------------+----------------------------------------+--------|
++ Perfect alignment of administrative boundaries between features in the same layer. Each administrative polygon layer complies with the following topology rules:
+  - [X] =Must not have Gaps=
+  - [X] =Must Not Overlap=
+
++ Perfect alignment of administrative boundaries between features in different layers. This is the result of generating the admin layers with a bottom-up approach, merging features from the lower administrative level to provide the higher one, e.g. merging settlements with the same municipality code is used to generate the features for the municipality layer.
+
++ Consistency in the structure of the administrative levels by providing a .geojson file for each of the recognized administrative levels:
+|----------------------+--------------------------+----------------------------------------+-------------|
+| Administrative Level | File Name                | Description                            | Feat. Count |
+|----------------------+--------------------------+----------------------------------------+-------------|
+| Country              | country.geojson          | Country                                |           1 |
+| NUTS 1               | regions.geojson          | Райони (Regions)                       |           2 |
+| NUTS 2               | planning-regions.geojson | Райони за планиране (Planning Regions) |           6 |
+| NUTS 3 / Provinces   | provinces.geojson        | Области (Provinces)                    |          28 |
+| LAU / Municipalities | municipalities.geojson   | Общини (Municipalities)                |         265 |
+| Settlements          | settlements.geojson      | Землища                                |      /5329??/ |
+|----------------------+--------------------------+----------------------------------------+-------------|
 
 *** What this refactor does not fix?
 ** DONE Phase 1 -- Toplogy Fixes
 + Objectives:
   - Fix the topology of the =settlements.geojson= file to allow for it to be used for further dataset improvements.
 
-** Phase 2 -- Administrative Layers Refactor
+** DONE Phase 2 -- Administrative Layers Refactor
 + Objectives:
   - Generate polygon .geojson files from the fixed settlement boundary layer for municipalities and provinces in Bulgaria.
   - Generate polygon .geojson files for the NUTS 0-3 levels using the created provinces files.
@@ -111,7 +118,6 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | NAME_EN      | String    | The feature's translated name.                     |
 | COUNTRY_CODE | String    | Country code.                                      |
 |--------------+-----------+----------------------------------------------------|
-
 
 ** TODO Merge Preparation
 + Objective: 
