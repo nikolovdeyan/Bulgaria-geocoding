@@ -19,12 +19,12 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 |----------------------+--------------------------+----------------------------------------+-------------|
 | Administrative Level | File Name                | Description                            | Feat. Count |
 |----------------------+--------------------------+----------------------------------------+-------------|
-| Country              | country.geojson          | Country                                |           1 |
-| NUTS 1               | regions.geojson          | Райони (Regions)                       |           2 |
-| NUTS 2               | planning-regions.geojson | Райони за планиране (Planning Regions) |           6 |
-| NUTS 3 / Provinces   | provinces.geojson        | Области (Provinces)                    |          28 |
-| LAU / Municipalities | municipalities.geojson   | Общини (Municipalities)                |         265 |
-| Settlements          | settlements.geojson      | Землища                                |      /5329??/ |
+| Country              | =country.geojson=          | Country                                |           1 |
+| NUTS 1               | =regions.geojson=          | Райони (Regions)                       |           2 |
+| NUTS 2               | =planning-regions.eeojson= | Райони за планиране (Planning Regions) |           6 |
+| NUTS 3 / Provinces   | =provinces.geojson=        | Области (Provinces)                    |          28 |
+| LAU / Municipalities | =municipalities.geojson=   | Общини (Municipalities)                |         265 |
+| Settlements          | =settlements.geojson=      | Землища                                |      /5329??/ |
 |----------------------+--------------------------+----------------------------------------+-------------|
 
 *** What this refactor does not fix?
@@ -55,6 +55,8 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 |                   |           |                                                                    |
 |-------------------+-----------+--------------------------------------------------------------------|
 
+[[./screenshots/new-settlements.geojson.png]]
+
 *** DONE Municipalities Layer
 + 265 Features -- one for each municipality in Bulgaria.
 
@@ -72,6 +74,8 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | NUTS_3_CODE   | String    | The code of this Oblast (Province) according to NUTS.                       |
 |---------------+-----------+-----------------------------------------------------------------------------|
 
+[[./screenshots/new-municipalities.geojson.png]]
+
 *** DONE Provinces Layer
 + 28 Features -- One for each province in Bulgaria.
 #+CAPTION: Attribute Table Fields for provinces.geojson
@@ -87,6 +91,8 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | NUTS_3_CODE   | String    | The code of this Oblast (Province) according to NUTS.            |
 |---------------+-----------+------------------------------------------------------------------|
 
+[[./screenshots/new-provinces.geojson.png]]
+
 *** DONE NUTS Planning Regions, Regions, Country Layers
 + Planning Regions (NUTS 2)
 #+CAPTION: Attribute Table Fields for planning-regions.geojson
@@ -99,6 +105,8 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | NUTS_2_CODE | String    | The code of this Planning Region according to NUTS.            |
 |-------------+-----------+----------------------------------------------------------------|
 
+[[./screenshots/new-planning-regions.geojson.png]]
+
 + Regions (NUTS 1)
 #+CAPTION: Attribute Table Fields for regions.geojson
 |-------------+-----------+----------------------------------------------------|
@@ -108,6 +116,8 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | NAME_EN     | String    | The feature's translated name.                     |
 | NUTS_1_CODE | String    | The code of this NUTS 1 feature.                   |
 |-------------+-----------+----------------------------------------------------|
+
+[[./screenshots/new-regions.geojson.png]]
 
 + Country Polygon
 #+CAPTION: Attribute Table Fields for country.geojson
@@ -119,11 +129,13 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | COUNTRY_CODE | String    | Country code.                                      |
 |--------------+-----------+----------------------------------------------------|
 
+[[./screenshots/new-country.geojson.png]]
+
 ** TODO Merge Preparation
 + Objective: 
   - Prepare dataset for pull request.
 
-** ACTV EKATTE Align Refactor
+** ACTV Phase 3 -- EKATTE Align Refactor
 + Objectives: 
   - Verify and fix administrative layers to be aligned with the official data (EKATTE).
 
