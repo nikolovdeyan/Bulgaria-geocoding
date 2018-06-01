@@ -52,31 +52,35 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 + 265 Features -- one for each municipality in Bulgaria.
 
 #+CAPTION: Attribute Table Fields for municipalities.geojson
-|-------------------+-----------+-----------------------------------------------------------------|
-| Field             | Data Type | Contains                                                        |
-|-------------------+-----------+-----------------------------------------------------------------|
-| EKATTE_ID         | Integer   | The ID given to this administrative unit in EKATTE.             |
-| NAME_BG           | String    | The name of this administrative unit in Bulgarian.              |
-| NAME_EN           | String    | The transliterated name of this administrative unit.            |
-| PROVINCE_CODE     | String    | The code of the Oblast (Province) this municipality belongs to. |
-| MUNICIPALITY_CODE | String    | The code of the Obstina (Municipality).                         |
-|-------------------+-----------+-----------------------------------------------------------------|
+|---------------+-----------+-----------------------------------------------------------------------------|
+| Field         | Data Type | Contains                                                                    |
+|---------------+-----------+-----------------------------------------------------------------------------|
+| EKATTE_ID     | Integer   | The ID given to this administrative unit in EKATTE.                         |
+| NAME_BG       | String    | The name of the administrative unit in Bulgarian.                           |
+| NAME_EN       | String    | The transliterated name of this administrative unit.                        |
+| PROVINCE_CODE | String    | The code of the Oblast (Province) this municipality belongs to from EKATTE. |
+| LAU_CODE      | String    | The code of the Obstina (Municipality) according to NUTS.                   |
+| NUTS_1_CODE   | String    | The code of the Region a feature belongs to according to NUTS.              |
+| NUTS_2_CODE   | String    | The code of the Planning a feature belongs to according to NUTS.            |
+| NUTS_3_CODE   | String    | The code of this Oblast (Province) according to NUTS.                       |
+|---------------+-----------+-----------------------------------------------------------------------------|
 
 *** DONE Provinces Layer
 + 28 Features -- One for each province in Bulgaria.
+#+CAPTION: Attribute Table Fields for provinces.geojson
+|---------------+-----------+------------------------------------------------------------------|
+| Field         | Data Type | Contains                                                         |
+|---------------+-----------+------------------------------------------------------------------|
+| EKATTE_ID     | Integer   | The ID given to this administrative unit in EKATTE.              |
+| NAME_BG       | String    | The name of this administrative unit in Bulgarian.               |
+| NAME_EN       | String    | The name of this administrative unit in English (transliterated) |
+| PROVINCE_CODE | String    | The code of the Oblast (Province) from EKATTE.                   |
+| NUTS_1_CODE   | String    | The code of the Region a feature belongs to according to NUTS.   |
+| NUTS_2_CODE   | String    | The code of the Planning a feature belongs to according to NUTS. |
+| NUTS_3_CODE   | String    | The code of this Oblast (Province) according to NUTS.            |
+|---------------+-----------+------------------------------------------------------------------|
 
-#+CAPTION: Attribute Table Fields for municipalities.geojson
-|---------------+-----------+------------------------------------------------------|
-| Field         | Data Type | Contains                                             |
-|---------------+-----------+------------------------------------------------------|
-| EKATTE_ID     | Integer   | The ID given to this administrative unit in EKATTE   |
-| NAME_BG       | String    | The name of this administrative unit in Bulgarian    |
-| NAME_EN       | String    | The transliterated name of this administrative unit  |
-| PROVINCE_CODE | String    | The code of the Oblast (Province)                    |
-| NUTS_3_CODE   | String    | The code of this Oblast (Province) according to NUTS |
-|---------------+-----------+------------------------------------------------------|
-
-*** NUTS Planning Regions, Regions, Country Layers
+*** DONE NUTS Planning Regions, Regions, Country Layers
 + Planning Regions (NUTS 2)
 #+CAPTION: Attribute Table Fields for planning-regions.geojson
 |-------------+-----------+----------------------------------------------------------------|
@@ -99,8 +103,14 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 |-------------+-----------+----------------------------------------------------|
 
 + Country Polygon
-
-
+#+CAPTION: Attribute Table Fields for country.geojson
+|--------------+-----------+----------------------------------------------------|
+| Field        | Data Type | Contains                                           |
+|--------------+-----------+----------------------------------------------------|
+| NAME_BG      | String    | The name of this administrative unit in Bulgarian. |
+| NAME_EN      | String    | The feature's translated name.                     |
+| COUNTRY_CODE | String    | Country code.                                      |
+|--------------+-----------+----------------------------------------------------|
 
 
 ** TODO Merge Preparation
