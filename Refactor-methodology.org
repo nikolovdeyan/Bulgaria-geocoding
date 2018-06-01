@@ -79,17 +79,25 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 *** NUTS Planning Regions, Regions, Country Layers
 + Planning Regions (NUTS 2)
 #+CAPTION: Attribute Table Fields for planning-regions.geojson
-|-------------+-----------+-------------------------------------------------------------------------|
-| Field       | Data Type | Contains                                                                |
-|-------------+-----------+-------------------------------------------------------------------------|
-| NAME_BG     | String    | The name of this administrative unit in Bulgarian.                      |
-| NAME_EN     | String    | The feature's transliterated name.                                      |
-| NUTS_1_CODE | String    | The code of the Region a feature belongs to according to NUTS.          |
-| NUTS_2_CODE | String    | The code of the Planning Region a feature belongs to according to NUTS. |
-|-------------+-----------+-------------------------------------------------------------------------|
+|-------------+-----------+----------------------------------------------------------------|
+| Field       | Data Type | Contains                                                       |
+|-------------+-----------+----------------------------------------------------------------|
+| NAME_BG     | String    | The name of this administrative unit in Bulgarian.             |
+| NAME_EN     | String    | The feature's translated name.                                 |
+| NUTS_1_CODE | String    | The code of the Region a feature belongs to according to NUTS. |
+| NUTS_2_CODE | String    | The code of this Planning Region according to NUTS.            |
+|-------------+-----------+----------------------------------------------------------------|
 
 + Regions (NUTS 1)
-  
+#+CAPTION: Attribute Table Fields for regions.geojson
+|-------------+-----------+----------------------------------------------------|
+| Field       | Data Type | Contains                                           |
+|-------------+-----------+----------------------------------------------------|
+| NAME_BG     | String    | The name of this administrative unit in Bulgarian. |
+| NAME_EN     | String    | The feature's translated name.                     |
+| NUTS_1_CODE | String    | The code of this NUTS 1 feature.                   |
+|-------------+-----------+----------------------------------------------------|
+
 + Country Polygon
 
 
