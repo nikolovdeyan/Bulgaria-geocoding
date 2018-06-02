@@ -10,6 +10,7 @@ A list with all municipalities
 - code - classification by the Statistics office
 - name - in Bulgarian
 
+
 settlements.geojson
 ------------------
 ![settlements.geojson](screenshots/settlements.geojson.png)

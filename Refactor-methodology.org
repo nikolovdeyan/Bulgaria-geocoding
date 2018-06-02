@@ -1,45 +1,59 @@
-
 * Bulgaria-geocoding Refactor Methodology
 ** Overview
 This sheet provides an overview and log for the fixes that were made to the Bulgaria Mapping Dataset after the fork from [[https://github.com/yurukov/Bulgaria-geocoding]].
 
 *** Why fixing it?
-+ *Because fixes were needed* -- The original source used for the generation of the generalized polygons for the settlement borders has many issues, most importantly it is old (many changes not reflected) and it breaks multiple topology rules.
-+ *Because such sources are needed* -- The ineptitude and unwillingness of the Bulgarian institutions to provide geospatial data is legendary.
-+ *Because I can do it* -- Having over ten years of experience wrangling geospatial data allows me to do the fixes relatively quickly and without much trouble.
++ *Because fixes were needed* -- The original source used for the generation of the generalized polygons for the settlement borders has many issues, most importantly it is old (many changes not reflected) and it doesn't comply with multiple topology rules. 
++ *Because such sources are needed* -- The ineptitude and unwillingness of the Bulgarian institutions to provide geospatial data continues for decades. Even when data is provided, it usually comes in a form that is maximally inconvenient (e.g. provide a raster output of the data instead of the source).
++ *Because I can do it* -- Having over ten years of experience wrangling geospatial data allows me to do the fixes relatively quickly and without much trouble. 
 
 *** Benefits provided by this fix
-+ Perfect alignment of administrative boundaries between features in the same layer. Each administrative polygon layer complies with the following topology rules:
++ Alignment of administrative boundaries between features in the same layer. Each administrative polygon layer complies with the following topology rules:
   - [X] =Must not have Gaps=
   - [X] =Must Not Overlap=
 
 + Perfect alignment of administrative boundaries between features in different layers. This is the result of generating the admin layers with a bottom-up approach, merging features from the lower administrative level to provide the higher one, e.g. merging settlements with the same municipality code is used to generate the features for the municipality layer.
 
 + Consistency in the structure of the administrative levels by providing a .geojson file for each of the recognized administrative levels:
-|----------------------+--------------------------+----------------------------------------+-------------|
-| Administrative Level | File Name                | Description                            | Feat. Count |
-|----------------------+--------------------------+----------------------------------------+-------------|
-| Country              | =country.geojson=          | Country                                |           1 |
-| NUTS 1               | =regions.geojson=          | Райони (Regions)                       |           2 |
-| NUTS 2               | =planning-regions.eeojson= | Райони за планиране (Planning Regions) |           6 |
-| NUTS 3 / Provinces   | =provinces.geojson=        | Области (Provinces)                    |          28 |
-| LAU / Municipalities | =municipalities.geojson=   | Общини (Municipalities)                |         265 |
-| Settlements          | =settlements.geojson=      | Землища                                |      /5329??/ |
-|----------------------+--------------------------+----------------------------------------+-------------|
+|----------------------+------------+--------------------------+----------------------------------------+-------------|
+| Administrative Level | NUTS Level | File Name                | Description                            | Feat. Count |
+|----------------------+------------+--------------------------+----------------------------------------+-------------|
+| Country              |  N/A      | =country.geojson=          | Country                                |           1 |
+| NUTS 1               |            | =regions.geojson=          | Райони (Regions)                       |           2 |
+| NUTS 2               |            | =planning-regions.eeojson= | Райони за планиране (Planning Regions) |           6 |
+| NUTS 3 / Provinces   |            | =provinces.geojson=        | Области (Provinces)                    |          28 |
+| LAU / Municipalities |            | =municipalities.geojson=   | Общини (Municipalities)                |         265 |
+| Settlements          |            | =settlements.geojson=      | Землища                                |      /5329??/ |
+|----------------------+------------+--------------------------+----------------------------------------+-------------|
+
++ Consistency in the geospatial and attribute data: The data has been separated into two types -- geospatial data is all data that carries the coordinates of the features (e.g. a =.geojson= file with the municipalities) and the identifiers that allow for joining to an attribute data source. The attribute data sources are presented as =.csv= files and can be joined to a geospatial dataset via any of the identifier fields (e.g. =EKATTE_ID=). That keeps the geospatial layers lighter while allowing them to be joined to different data sources depending on the usage.
 
 *** What this refactor does not fix?
-** DONE Phase 1 -- Toplogy Fixes
++ The refactor does not /currently/ provide the tru
++ The refactor does not keep track of the historical changes to the administrative structure over the years. 
++ Many of the manual changes to the data made can be automated at least to some extent. This is also (currently) not provided.
++ The geometry of the grounds polygons can be further improved by trying different generalization algorithms and by manual fixing.
+
+** Refactor Phase 1 -- Toplogy
 + Objectives:
   - Fix the topology of the =settlements.geojson= file to allow for it to be used for further dataset improvements.
 
-** DONE Phase 2 -- Administrative Layers Refactor
++ Fixes:
+To determine the amount of fixes needed to the dataset I used the =Topology Checker= plugin for QGIS. The check for gaps and overlaps yielded 247 errors. The fixes were performed manually.
+[[./screenshots/topology_errors.png]]
+[[./screenshots/topology_errors_2.png]]
+
++ More about topology rules and fixes [[http://wiki.gis.com/wiki/index.php/Topology][here]] or [[https://desktop.arcgis.com/en/arcmap/latest/manage-data/editing-topology/geodatabase-topology-rules-and-topology-error-fixes.htm][here]].
+
+** Refactor Phase 2 -- Administrative Layers Refactor
 + Objectives:
   - Generate polygon .geojson files from the fixed settlement boundary layer for municipalities and provinces in Bulgaria.
   - Generate polygon .geojson files for the NUTS 0-3 levels using the created provinces files.
   - Update the schema for all layers for consistency.
   - Use EKATTE to fill in identifier fields for all layers.
 
-*** DONE Settlements Layer
+*** Settlements Grounds (Zemlishta) Layer
++ 4621 Features. This layer will also require further cleanup to correctly match the reality.
 #+CAPTION: Attribute Table Fields for settlements.geojson
 |-------------------+-----------+--------------------------------------------------------------------|
 | Field             | Data Type | Contains                                                           |
@@ -51,13 +65,11 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | TYPE_EN           | String    | The type of settlement in English.                                 |
 | PROVINCE_CODE     | String    | The code of the Oblast (Province) this settlement belongs to.      |
 | MUNICIPALITY_CODE | String    | The code of the Obstina (Municipality) this settlement belongs to. |
-| contains          | String    | ...                                                                |
-|                   |           |                                                                    |
 |-------------------+-----------+--------------------------------------------------------------------|
 
 [[./screenshots/new-settlements.geojson.png]]
 
-*** DONE Municipalities Layer
+*** Municipalities (Obshtini) Layer
 + 265 Features -- one for each municipality in Bulgaria.
 
 #+CAPTION: Attribute Table Fields for municipalities.geojson
@@ -93,7 +105,7 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 
 [[./screenshots/new-provinces.geojson.png]]
 
-*** DONE NUTS Planning Regions, Regions, Country Layers
+*** DONE NUTS Level 2 -- Planning Regions
 + Planning Regions (NUTS 2)
 #+CAPTION: Attribute Table Fields for planning-regions.geojson
 |-------------+-----------+----------------------------------------------------------------|
@@ -105,8 +117,9 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | NUTS_2_CODE | String    | The code of this Planning Region according to NUTS.            |
 |-------------+-----------+----------------------------------------------------------------|
 
-[[./screenshots/new-planning-regions.geojson.png]]
+[[./screenshots/new-planning-regions.png]]
 
+*** DONE NUTS Level 1 -- Regions
 + Regions (NUTS 1)
 #+CAPTION: Attribute Table Fields for regions.geojson
 |-------------+-----------+----------------------------------------------------|
@@ -117,8 +130,9 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 | NUTS_1_CODE | String    | The code of this NUTS 1 feature.                   |
 |-------------+-----------+----------------------------------------------------|
 
-[[./screenshots/new-regions.geojson.png]]
+[[./screenshots/new-regions.png]]
 
+*** DONE Country Polygon
 + Country Polygon
 #+CAPTION: Attribute Table Fields for country.geojson
 |--------------+-----------+----------------------------------------------------|
@@ -149,3 +163,17 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
 |                      |            |             |                                |
 |                      |            |             |                                |
 
+
+** Resources:
+To perform the fixes detailed in this document I used the following resources:
+
++ Data:
+  - NSI
+  - Infostat System of the National Statistical Institute -- [[https://infostat.nsi.bg/infostat]]
+  - EKATTE
+
++ Tools:
+  - QGIS 2.18
+  - LibreOffice 6.0
+  - GIMP 2.10
+  - Spacemacs
