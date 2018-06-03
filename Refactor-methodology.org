@@ -140,12 +140,17 @@ This sheet provides an overview and log for the fixes that were made to the Bulg
   - Verify and fix administrative layers to be aligned with the official data (EKATTE).
 
 *** Fixes:
-|----------------------+------------+-------------+--------------------------------|
-| Settlement           | Obshtina   | Oblast      | Fix                            |
-|----------------------+------------+-------------+--------------------------------|
-| Budiltsi (06834)     | Kresna     | Blagoevgrad | Merged with Slivnitsa (67369)  |
-| Balabanchevo (02322) | Sungurlare | Burgas      | Merged with Sungurlare (70247) |
-|                      |            |             |                                |
-|                      |            |             |                                |
-|                      |            |             |                                |
+|-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
+| Settlement              | Obshtina   | Oblast      | Fix                                                                                                             |
+|-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
+| Budiltsi (06834)        | Kresna     | Blagoevgrad | Merged with Slivnitsa (67369)                                                                                   |
+| Balabanchevo (02322)    | Sungurlare | Burgas      | Merged with Sungurlare (70247)                                                                                  |
+| Zhelezari (29088)       | Omurtag    | Targovishte | Abolished. Polygon merged with Iliyno (32620)                                                                   |
+| Vetren (29427)          | Burgas     | Burgas      | Merged with Burgas (07079)                                                                                      |
+| Kamensko (35924)        | Sungurlare | Burgas      | Abolished. Polygon merged with Manolich (47096)                                                                 |
+| Rudnik (63183)          | Burgas     | Burgas      | Merged with Burgas (07079)                                                                                      |
+| Modren (68151)          | Dzhebel    | Kardzhali   | Merged with Mishevsko (48622)                                                                                   |
+| Fabrika (76011)         | Zlatograd  | Smolyan     | Merged with Startsevo (59344) because could not form multipart polygon with Zlatograd (data format restriction) |
+| Halovski kolibi (77133) | Boynitsa   | Vidin       | Abolished. Merged with Shishentsi (83329) because of proximity.                                                 |
+|-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
 
