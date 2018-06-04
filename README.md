@@ -97,3 +97,16 @@ Locations of all RES power plants connected to the grid until Dec 2013. In Bulga
 NSI/Ekatte
 ------------------
 Original documentation and reference tables for the Ekatte coding system by the National statistics institute
+
+
+
+------------
+
+### Features counts
+
+| Feature                            |         Count |
+| ---------------------------------- | ------------- |
+| EKATTE entities total              |          5256 |
+| Settlement grounds                 |          4614 |
+| EKATTE settlements with no grounds |           645 |
+|                                    |               |
