@@ -152,6 +152,14 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
   - Alignment between repository dataset and official data from EKATTE.
 
 *** Fixes:
++ After joining the EKATTE table of all settlements to the settlement grounds I used the output of the non-matched settlements to query the EKATTE web site for the information of where those settlements belonged. I could not find this information easily mapped in any of the tables they provide to download so I had to do this operation manually. 
+
+The resulting information is incorporated into the settlements layer: 
+[[./screenshots/shared_grounds.png]]
+
+
+[[./screenshots/removed_admins.png]]
++ Manual fixes to reflect EKATTE
 |-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
 | Settlement              | Obshtina   | Oblast      | Fix                                                                                                             |
 |-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
@@ -169,6 +177,9 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
 ** Merge Preparation
 + Objective: 
   - Prepare dataset for pull request.
+
++ Directory structure updated:
+  - =data/= directory to hold datasets related to the geospatial layers.
 
 ** Resources:
 To perform the fixes detailed in this document I used the following resources:
