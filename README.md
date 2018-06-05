@@ -11,18 +11,20 @@ Notes on changes made to this repository are available [here](Refactor-methodolo
 The data in this repository has been organized around the administrative units in Bulgaria. Presented in `.geojson` file format, those are the geospatial entities that can be used for mapping a variety of statistical data. A seperate file has been generated for each administrative level: 
 
 **Geospatial Data**
- | File Name                   | Admin (English)      | Admin (Bg)          | NUTS Level | Feat. Count |
- | :-------------------------- | :------------------- | :------------------ | :--------- | ----------- |
- | `country.geojson`           | Country              | Държава             | N/A        |           1 |
- | `regions.geojson`           | Region               | Район               | NUTS 1     |           2 |
- | `planning-regions.geojson`  | Planning Region      | Район за планиране  | NUTS 2     |           6 |
- | `provinces.geojson`         | Province             | Област              | NUTS 3     |          28 |
- | `municipalities.geojson`    | Municipality         | Община              | LAU        |         265 |
- | `settlements.geojson`       | Settlement Grounds   | Землище             | N/A        |        4611 |
+
+ | File Name                  | Admin (English)     | Admin (Bg)         | NUTS Level | Feat. Count |
+ | -------------------------- | ------------------- | ------------------ | ---------  | ----------- |
+ | `country.geojson`          | Country             | Държава            | N/A        |           1 |
+ | `regions.geojson`          | Region              | Район              | NUTS 1     |           2 |
+ | `planning-regions.geojson` | Planning Region     | Район за планиране | NUTS 2     |           6 |
+ | `provinces.geojson`        | Province            | Област             | NUTS 3     |          28 |
+ | `municipalities.geojson`   | Municipality        | Община             | LAU        |         265 |
+ | `settlements.geojson`      | Settlement Grounds  | Землище            | N/A        |        4611 |
  
  In addition to the admin units there are also some attribute datasets presented in the `data/` directory as `.csv` files. The purpose of those files is to be joined to the spatial layers for mapping purposes.
 
 **Attribute Data**
+
  | File Name                  | Description                                              | Record Count |
  | -------------------------- | -------------------                                      | -----------  |
  | `ekatte_enhanced.csv`      | EKATTE official info enhanced with additional attributes | 5257         |
@@ -67,6 +69,7 @@ Examples:
 | NUTS_3_CODE       | String    | The code of the Province this unit belongs to according to NUTS.   |
 | PROVINCE_CODE     | String    | The code of the Oblast (Province) according to EKATTE              |
 
+-----
 
 ### `provinces.geojson`
 
@@ -80,14 +83,7 @@ Examples:
 | NUTS_3_CODE       | String    | The code of the Province this unit belongs to according to NUTS.   |
 | PROVINCE_CODE     | String    | The code of the Oblast (Province) this settlement belongs to.      |
 
-### `planning-regions.geojson`
-
-| Field             | Data Type | Contains                                                           |
-| ----------------- | --------- | ------------------------------------------------------------------ |
-| NAME_BG           | String    | The name of this administrative unit in Bulgarian.                 |
-| NAME_EN           | String    | The transliterated name of this administrative unit.               |
-| NUTS_1_CODE       | String    | The code of the region this unit belongs to.                       |
-| NUTS_2_CODE       | String    | The code of the planning-region this unit belongs to.              |
+-----
 
 ### `planning-regions.geojson`
 
@@ -97,6 +93,19 @@ Examples:
 | NAME_EN           | String    | The transliterated name of this administrative unit.               |
 | NUTS_1_CODE       | String    | The code of the region this unit belongs to.                       |
 | NUTS_2_CODE       | String    | The code of the planning-region this unit belongs to.              |
+
+-----
+
+### `planning-regions.geojson`
+
+| Field             | Data Type | Contains                                                           |
+| ----------------- | --------- | ------------------------------------------------------------------ |
+| NAME_BG           | String    | The name of this administrative unit in Bulgarian.                 |
+| NAME_EN           | String    | The transliterated name of this administrative unit.               |
+| NUTS_1_CODE       | String    | The code of the region this unit belongs to.                       |
+| NUTS_2_CODE       | String    | The code of the planning-region this unit belongs to.              |
+
+-----
 
 ### `regions.geojson`
 
@@ -106,6 +115,8 @@ Examples:
 | NAME_EN           | String    | The transliterated name of this administrative unit.               |
 | NUTS_1_CODE       | String    | The code of the region this unit belongs to.                       |
 
+-----
+
 ### `country.geojson`
 
 | Field             | Data Type | Contains                                                           |
@@ -113,6 +124,8 @@ Examples:
 | NAME_BG           | String    | The name of this administrative unit in Bulgarian.                 |
 | NAME_EN           | String    | The transliterated name of this administrative unit.               |
 | COUNTRY_CODE      | String    | The code of the country.                                           |
+
+-----
 
 ## Attribute Data
 ### EKATTE -- Unified Classification of Administrative-Territorial and Territorial UnitsNational Settlements Registre
