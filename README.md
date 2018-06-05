@@ -3,6 +3,46 @@ Geocoding resources for Bulgaria
 
 This is a collection of resources that should help anyone working with geocoding or mapping data in Bulgaria.
 
+## Repo Structure
+|----------------------|--------------------|------------|----------------------------|-------------|
+| Administrative Level | Description        | NUTS Level | File Name                  | Feat. Count |
+|----------------------|--------------------|------------|----------------------------|-------------|
+| Country              | Държава            | N/A        | `country.geojson`          |           1 |
+| Region               | Район              | NUTS 1     | `regions.geojson`          |           2 |
+| Planning Region      | Район за планиране | NUTS 2     | `planning-regions.geojson` |           6 |
+| Province             | Област             | NUTS 3     | `provinces.geojson`        |          28 |
+| Municipality         | Община             | LAU        | `municipalities.geojson`   |         265 |
+| Settlement Ground    | Землище            | N/A        | `settlements.geojson`      |        4614 |
+|----------------------|--------------------|------------|----------------------------|-------------|
+
+## Geospatial Data
+### settlements.geojson
+This is a simplified version of the territorial separation of Bulgaria among the grounds of settlements. While some settlements don't have assigned grounds, they reside inside the grounds of other settlements. In such cases they would be listed in the "contains" array property.
+The shapes do not reflect accurately the actual grounds or their overall size. They do match them within reasonable margin of error, which would be enough for most visualization purposes. More accurate maps can be obtained from the national Cadastre office.
+For more information, check http://yurukov.net/blog/2015/03/16/zemlishta/ (in Bulgarian)
+
+|-------------------|-----------|--------------------------------------------------------------------|
+| Field             | Data Type | Contains                                                           |
+|-------------------|-----------|--------------------------------------------------------------------|
+| EKATTE_ID         | String    | The ID given to this administrative unit in EKATTE.                |
+| NAME_BG           | String    | The name of this administrative unit in Bulgarian.                 |
+| NAME_EN           | String    | The transliterated name of this administrative unit.               |
+| TYPE_BG           | String    | The type of settlement in Bulgarian (village, city).               |
+| TYPE_EN           | String    | The type of settlement in English.                                 |
+| PROVINCE_CODE     | String    | The code of the Oblast (Province) this settlement belongs to.      |
+| MUNICIPALITY_CODE | String    | The code of the Obstina (Municipality) this settlement belongs to. |
+|-------------------|-----------|--------------------------------------------------------------------|
+
+Examples:
+- population distribution in Bulgaria Dec. 2013 https://gist.github.com/yurukov/c4f9ba37b311b53088f1
+- logging permits in Bulgaria Apr. 2011 - Dec. 2014 https://gist.github.com/yurukov/136e144bbd634406054e
+
+## Attribute Data
+
+## Sources
+
+
+
 municipalities.csv
 ------------------
 A list with all municipalities
@@ -11,21 +51,6 @@ A list with all municipalities
 - name - in Bulgarian
 
 
-settlements.geojson
-------------------
-![settlements.geojson](screenshots/settlements.geojson.png)
-
-This is a simplified version of the territorial separation of Bulgaria among the grounds of settlements. While some settlements don't have assigned grounds, they reside inside the grounds of other settlements. In such cases they would be listed in the "contains" array property.
-The shapes do not reflect accurately the actual grounds or their overall size. They do match them within reasonable margin of error, which would be enough for most visualization purposes. More accurate maps can be obtained from the national Cadastre office.
-For more information, check http://yurukov.net/blog/2015/03/16/zemlishta/ (in Bulgarian)
-- ekatte - Bulgarian region coding system
-- nuts4 - municipality code
-- nuts3 - province code
-- contains - a list of ekatte codes of settlements that may reside inside this area
-
-Examples:
-- population distribution in Bulgaria Dec. 2013 https://gist.github.com/yurukov/c4f9ba37b311b53088f1
-- logging permits in Bulgaria Apr. 2011 - Dec. 2014 https://gist.github.com/yurukov/136e144bbd634406054e
 
 settlements.csv
 ------------------
@@ -100,6 +125,7 @@ Original documentation and reference tables for the Ekatte coding system by the 
 
 
 
+![settlements.geojson](screenshots/settlements.geojson.png)
 ------------
 
 ### Features counts
