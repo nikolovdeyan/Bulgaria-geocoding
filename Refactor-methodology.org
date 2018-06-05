@@ -8,21 +8,8 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
 + *Because I can* -- Having over ten years of experience wrangling geospatial data allows me to do the fixes relatively quickly and without much trouble. I love mapping and data visualization and because of that and the reasons above I decided to help with the data cleanup.
 
 *** Benefits provided by this fix
-+ Alignment of administrative boundaries between features in the same layer. Each administrative polygon layer complies with the following topology rules:
-  - [X] =Must not have Gaps=
-  - [X] =Must Not Overlap=
-
++ Alignment of administrative boundaries between features in the same layer. Each administrative polygon layer complies with the following topology rules  =Must not have Gaps=, =Must Not Overlap=
 + Alignment of administrative boundaries between features in different layers. This is the result of generating the admin layers with a bottom-up approach, merging features from the lower administrative level to provide the higher one, e.g. merging settlements with the same municipality code is used to generate the features for the municipality layer.
-
-### Features counts
-
-| Feature                            |         Count |
-| ---------------------------------- | ------------- |
-| EKATTE entities total              |          5256 |
-| Settlement grounds                 |          4614 |
-| EKATTE settlements with no grounds |           645 |
-|                                    |               |
-
 + Consistency in the structure of the administrative levels by providing a .geojson file for each of the recognized administrative levels:
 |----------------------+--------------------+------------+--------------------------+---+-------------|
 | Administrative Level | Description        | NUTS Level | File Name                |   | Feat. Count |
@@ -34,10 +21,8 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
 | Municipality         | Община             | LAU        | =municipalities.geojson=   |   |         265 |
 | Settlement Ground    | Землище            | /N/A/        | =settlements.geojson=      |   |        4614 |
 |----------------------+--------------------+------------+--------------------------+---+-------------|
-
 + Consistency in the geospatial and attribute data: The data has been separated into two types -- geospatial data is all data that carries the coordinates of the features (e.g. a =.geojson= file with the municipalities) and the identifiers that allow for joining to an attribute data source. The attribute data sources are presented as =.csv= files and can be joined to a geospatial dataset via any of the identifier fields (e.g. =EKATTE_ID=). That keeps the geospatial layers lighter while allowing them to be joined to different data sources depending on the usage.
-  
-+ Additional information provided -- Some important data was missing about the settlements that have no own grounds polygon. This information was not readily available in the EKATTE dataset, but was present on the website. That information was scraped and integrated with the settlements dataset.
++ Additional information provided -- Some important data was missing about the settlements that have no own grounds polygon. This information was not readily available in the EKATTE dataset, but was present on the website. That information was scraped and integrated with the settlements dataset. Most important data of this type is the information of the settlements sharing grounds.
   
 *** What this refactor does not fix?
 + The refactor does not keep track of the historical changes to the administrative structure over the years. 
@@ -64,24 +49,6 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
   - Generate polygon .geojson files for the NUTS 0-3 levels using the created provinces files.
   - Update the schema for all layers for consistency.
   - Use EKATTE to fill in identifier fields for all layers.
-
-*** Settlements Grounds (Zemlishta) Layer
-+ 4614 Features. This layer will also require further cleanup to correctly match the reality.
-
-*** Municipalities (Obshtini) Layer
-+ 265 Features -- one for each municipality in Bulgaria.
-
-*** Provinces Layer
-+ 28 Features -- One for each province in Bulgaria.
-
-*** NUTS Level 2 -- Planning Regions
-+ Planning Regions (NUTS 2)
-
-*** NUTS Level 1 -- Regions
-+ Regions (NUTS 1)
-
-*** Country Polygon
-+ Country Polygon
 
 ** EKATTE Data Align
 + Objectives: 
