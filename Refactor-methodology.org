@@ -4,7 +4,7 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
 
 *** Why fixing it?
 + *Because fixes were needed* -- The original source used for the generation of the generalized polygons for the settlement borders has many issues, most importantly its age (many changes not reflected). That was leading to innacuracies that were sometimes visible (e.g. mapping data for merged grounds result in holes), but sometimes not visible on the produced maps (multiple settlements sharing grounds should have their data aggregated).
-+ *Because such sources are needed* -- Bulgarian institutions have a history of unwillingness to share geospatial data created with public funds even when they are required to do so. The data that is shared is often of low quality or presented in unusable form. Bulgaria continues to be non-compliant with the agreed process for sharing geospatial data in many ways [[ref1]] [[ref2]].
++ *Because such sources are needed* -- Bulgarian institutions have a history of unwillingness to share geospatial data created with public funds even when they are required to do so. The data that is shared is often of low quality or presented in unusable form. Bulgaria continues to be non-compliant with the agreed process for sharing geospatial data in many ways [[1]], [[2]].
 + *Because I can* -- Having over ten years of experience wrangling geospatial data allows me to do the fixes relatively quickly and without much trouble. I love mapping and data visualization and because of that and the reasons above I decided to help with the data cleanup.
 
 *** Benefits provided by this fix
@@ -13,6 +13,15 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
   - [X] =Must Not Overlap=
 
 + Alignment of administrative boundaries between features in different layers. This is the result of generating the admin layers with a bottom-up approach, merging features from the lower administrative level to provide the higher one, e.g. merging settlements with the same municipality code is used to generate the features for the municipality layer.
+
+### Features counts
+
+| Feature                            |         Count |
+| ---------------------------------- | ------------- |
+| EKATTE entities total              |          5256 |
+| Settlement grounds                 |          4614 |
+| EKATTE settlements with no grounds |           645 |
+|                                    |               |
 
 + Consistency in the structure of the administrative levels by providing a .geojson file for each of the recognized administrative levels:
 |----------------------+--------------------+------------+--------------------------+---+-------------|
@@ -58,96 +67,21 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
 
 *** Settlements Grounds (Zemlishta) Layer
 + 4614 Features. This layer will also require further cleanup to correctly match the reality.
-#+CAPTION: Attribute Table Fields for settlements.geojson
-|-------------------+-----------+--------------------------------------------------------------------|
-| Field             | Data Type | Contains                                                           |
-|-------------------+-----------+--------------------------------------------------------------------|
-| EKATTE_ID         | String    | The ID given to this administrative unit in EKATTE.                |
-| NAME_BG           | String    | The name of this administrative unit in Bulgarian.                 |
-| NAME_EN           | String    | The transliterated name of this administrative unit.               |
-| TYPE_BG           | String    | The type of settlement in Bulgarian (village, city).               |
-| TYPE_EN           | String    | The type of settlement in English.                                 |
-| PROVINCE_CODE     | String    | The code of the Oblast (Province) this settlement belongs to.      |
-| MUNICIPALITY_CODE | String    | The code of the Obstina (Municipality) this settlement belongs to. |
-|-------------------+-----------+--------------------------------------------------------------------|
-
-[[./screenshots/new-settlements.geojson.png]]
 
 *** Municipalities (Obshtini) Layer
 + 265 Features -- one for each municipality in Bulgaria.
 
-#+CAPTION: Attribute Table Fields for municipalities.geojson
-|---------------+-----------+-----------------------------------------------------------------------------|
-| Field         | Data Type | Contains                                                                    |
-|---------------+-----------+-----------------------------------------------------------------------------|
-| EKATTE_ID     | String    | The ID given to this administrative unit in EKATTE.                         |
-| NAME_BG       | String    | The name of the administrative unit in Bulgarian.                           |
-| NAME_EN       | String    | The transliterated name of this administrative unit.                        |
-| PROVINCE_CODE | String    | The code of the Oblast (Province) this municipality belongs to from EKATTE. |
-| LAU_CODE      | String    | The code of the Obstina (Municipality) according to NUTS.                   |
-| NUTS_1_CODE   | String    | The code of the Region a feature belongs to according to NUTS.              |
-| NUTS_2_CODE   | String    | The code of the Planning a feature belongs to according to NUTS.            |
-| NUTS_3_CODE   | String    | The code of this Oblast (Province) according to NUTS.                       |
-|---------------+-----------+-----------------------------------------------------------------------------|
-
-[[./screenshots/new-municipalities.geojson.png]]
-
 *** Provinces Layer
 + 28 Features -- One for each province in Bulgaria.
-#+CAPTION: Attribute Table Fields for provinces.geojson
-|---------------+-----------+------------------------------------------------------------------|
-| Field         | Data Type | Contains                                                         |
-|---------------+-----------+------------------------------------------------------------------|
-| EKATTE_ID     | String    | The ID given to this administrative unit in EKATTE.              |
-| NAME_BG       | String    | The name of this administrative unit in Bulgarian.               |
-| NAME_EN       | String    | The name of this administrative unit in English (transliterated) |
-| PROVINCE_CODE | String    | The code of the Oblast (Province) from EKATTE.                   |
-| NUTS_1_CODE   | String    | The code of the Region a feature belongs to according to NUTS.   |
-| NUTS_2_CODE   | String    | The code of the Planning a feature belongs to according to NUTS. |
-| NUTS_3_CODE   | String    | The code of this Oblast (Province) according to NUTS.            |
-|---------------+-----------+------------------------------------------------------------------|
-
-[[./screenshots/new-provinces.geojson.png]]
 
 *** NUTS Level 2 -- Planning Regions
 + Planning Regions (NUTS 2)
-#+CAPTION: Attribute Table Fields for planning-regions.geojson
-|-------------+-----------+----------------------------------------------------------------|
-| Field       | Data Type | Contains                                                       |
-|-------------+-----------+----------------------------------------------------------------|
-| NAME_BG     | String    | The name of this administrative unit in Bulgarian.             |
-| NAME_EN     | String    | The feature's translated name.                                 |
-| NUTS_1_CODE | String    | The code of the Region a feature belongs to according to NUTS. |
-| NUTS_2_CODE | String    | The code of this Planning Region according to NUTS.            |
-|-------------+-----------+----------------------------------------------------------------|
-
-[[./screenshots/new-planning-regions.png]]
 
 *** NUTS Level 1 -- Regions
 + Regions (NUTS 1)
-#+CAPTION: Attribute Table Fields for regions.geojson
-|-------------+-----------+----------------------------------------------------|
-| Field       | Data Type | Contains                                           |
-|-------------+-----------+----------------------------------------------------|
-| NAME_BG     | String    | The name of this administrative unit in Bulgarian. |
-| NAME_EN     | String    | The feature's translated name.                     |
-| NUTS_1_CODE | String    | The code of this NUTS 1 feature.                   |
-|-------------+-----------+----------------------------------------------------|
-
-[[./screenshots/new-regions.png]]
 
 *** Country Polygon
 + Country Polygon
-#+CAPTION: Attribute Table Fields for country.geojson
-|--------------+-----------+----------------------------------------------------|
-| Field        | Data Type | Contains                                           |
-|--------------+-----------+----------------------------------------------------|
-| NAME_BG      | String    | The name of this administrative unit in Bulgarian. |
-| NAME_EN      | String    | The feature's translated name.                     |
-| COUNTRY_CODE | String    | Country code.                                      |
-|--------------+-----------+----------------------------------------------------|
-
-[[./screenshots/new-country.geojson.png]]
 
 ** EKATTE Data Align
 + Objectives: 
@@ -182,6 +116,7 @@ The resulting information is incorporated into the settlements layer:
 
 + Directory structure updated:
   - =data/= directory to hold datasets related to the geospatial layers.
+  - README file updates.
 
 ** Resources:
 To perform the fixes detailed in this document I used the following resources:
@@ -199,5 +134,5 @@ To perform the fixes detailed in this document I used the following resources:
   - Python 3.6
 
 ** References
-<<ref1>>http://cdr.eionet.europa.eu/bg/eu/inspire/monitoring/envwsvmjq/
-<<ref2>>https://inspire.ec.europa.eu/sites/default/files/inspirecountryfichebulgaria_2016.pdf
+[1]: http://cdr.eionet.europa.eu/bg/eu/inspire/monitoring/envwsvmjq/
+[2]: https://inspire.ec.europa.eu/sites/default/files/inspirecountryfichebulgaria_2016.pdf
