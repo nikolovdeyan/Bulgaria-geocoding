@@ -4,13 +4,42 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
 
 *** Why fixing it?
 + *Because fixes were needed* -- The original source used for the generation of the generalized polygons for the settlement borders has many issues, most importantly its age (many changes not reflected). That was leading to innacuracies that were sometimes visible (e.g. mapping data for merged grounds result in holes), but sometimes not visible on the produced maps (multiple settlements sharing grounds should have their data aggregated).
-+ *Because such sources are needed* -- Bulgarian institutions have a history of unwillingness to share geospatial data created with public funds even when they are required to do so. The data that is shared is often of low quality or presented in unusable form. Bulgaria continues to be non-compliant with the agreed process for sharing geospatial data in many ways [[1]], [[2]].
-+ *Because I can* -- Having over ten years of experience wrangling geospatial data allows me to do the fixes relatively quickly and without much trouble. I love mapping and data visualization and because of that and the reasons above I decided to help with the data cleanup.
++ *Because such sources are needed* -- Bulgarian institutions have a history of unwillingness to share geospatial data created with public funds even when they are required to do so. The data that is shared is often of low quality or presented in unusable form (e.g. vector features are exported and shared as raster). Bulgaria continues to be non-compliant with the agreed process for sharing geospatial data in many ways [[1]], [[2]]. The country is also the member that has the least amount of geospatial datasets published on the INSPIRE Geoportal with measly 42 shared resources, very far away from Hungary (454), Croatia (2281), and not even compareable to the top countries such as Germany (97777) or France (199839).
++ *Because I can* -- Having over ten years of experience wrangling geospatial data allows me to do the fixes relatively quickly and without much trouble. I love mapping and data visualization and I will surely use this dataset to create some nice maps.
 
 *** Benefits provided by this fix
-+ Alignment of administrative boundaries between features in the same layer. Each administrative polygon layer complies with the following topology rules  =Must not have Gaps=, =Must Not Overlap=
-+ Alignment of administrative boundaries between features in different layers. This is the result of generating the admin layers with a bottom-up approach, merging features from the lower administrative level to provide the higher one, e.g. merging settlements with the same municipality code is used to generate the features for the municipality layer.
-+ Consistency in the structure of the administrative levels by providing a .geojson file for each of the recognized administrative levels:
++ Aligned borders of features in the same layer (for each of the layers provided).
++ Aligned borders of features between different layers.
++ All administrative levels that may used for mapping are represented as geospatial layers.
++ Consistency in the geospatial and attribute data: The data has been separated into two types -- geospatial data is all data that carries the coordinates of the features (e.g. a =.geojson= file with the municipalities) and the identifiers that allow for joining to an attribute data source. The attribute data sources are presented as =.csv= files and can be joined to a geospatial dataset via any of the identifier fields (e.g. =EKATTE_ID=). That keeps the geospatial layers lighter while allowing them to be joined to different data sources depending on the usage.
++ Additional information provided -- Some important data was missing about the settlements that have no own grounds polygon. This information was not readily available in the EKATTE dataset, but was present on the website. That information was scraped and integrated with the settlements dataset. Most important data of this type is the information of the settlements sharing grounds.
+  
+*** What this refactor does not fix?
++ The refactor does not keep track of the historical changes to the administrative structure over the years. 
++ Many of the manual changes to the data made can be automated at least to some extent. This is also (currently) not provided. Checks of future data editions are also a good candidate for automation.
++ The geometry of the grounds polygons can be further improved by trying different generalization algorithms and by manual fixing. A good approach would be to have a virtual field showing difference between official area data for the settlement grounds and the calculated area and adjusting based on that.
++ The data in this repository can be better managed by using a geodatabase or other more suitable format. The data is also not properly normalized as it stands right not (e.g. there is a field holding multiple ids in the form of string which needs to be split and parsed in order to be useful).
+
+** Topology Refactor
++ Objectives:
+  - Fix the topology of the =settlements.geojson= file to allow for it to be used for further dataset improvements.
++ More about topology rules and fixes [[http://wiki.gis.com/wiki/index.php/Topology][here]] or [[https://desktop.arcgis.com/en/arcmap/latest/manage-data/editing-topology/geodatabase-topology-rules-and-topology-error-fixes.htm][here]].
+
++ Fixes:
+  - Alignment of administrative boundaries between features in the same layer. Each administrative polygon layer complies with the following topology rules  =Must not have Gaps=, =Must Not Overlap=. To determine the amount of fixes needed to the dataset I used the =Topology Checker= plugin for QGIS. The check yielded 247 errors which were manually fixed.
+
+[[./screenshots/topology_errors.png]]
+
+** Administrative Layers Refactor
++ Objectives:
+  - Generate polygon .geojson files from the fixed settlement boundary layer for municipalities and provinces in Bulgaria.
+  - Generate polygon .geojson files for the NUTS 0-3 levels using the created provinces files.
+  - Update the schema for all layers for consistency.
+  - Use EKATTE to fill in identifier fields for all layers.
+
++ Fixes:
+  - Alignment of administrative boundaries between features in different layers. This is the result of generating the admin layers with a bottom-up approach, merging features from the lower administrative level to provide the higher one, e.g. merging settlements with the same municipality code is used to generate the features for the municipality layer.
+  - Consistency in the structure of the administrative levels by providing a .geojson file for each of the recognized administrative levels:
 |----------------------+--------------------+------------+--------------------------+---+-------------|
 | Administrative Level | Description        | NUTS Level | File Name                |   | Feat. Count |
 |----------------------+--------------------+------------+--------------------------+---+-------------|
@@ -21,69 +50,34 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
 | Municipality         | Община             | LAU        | =municipalities.geojson=   |   |         265 |
 | Settlement Ground    | Землище            | /N/A/        | =settlements.geojson=      |   |        4614 |
 |----------------------+--------------------+------------+--------------------------+---+-------------|
-+ Consistency in the geospatial and attribute data: The data has been separated into two types -- geospatial data is all data that carries the coordinates of the features (e.g. a =.geojson= file with the municipalities) and the identifiers that allow for joining to an attribute data source. The attribute data sources are presented as =.csv= files and can be joined to a geospatial dataset via any of the identifier fields (e.g. =EKATTE_ID=). That keeps the geospatial layers lighter while allowing them to be joined to different data sources depending on the usage.
-+ Additional information provided -- Some important data was missing about the settlements that have no own grounds polygon. This information was not readily available in the EKATTE dataset, but was present on the website. That information was scraped and integrated with the settlements dataset. Most important data of this type is the information of the settlements sharing grounds.
-  
-*** What this refactor does not fix?
-+ The refactor does not keep track of the historical changes to the administrative structure over the years. 
-+ Many of the manual changes to the data made can be automated at least to some extent. This is also (currently) not provided. Checks of future data editions are also a good candidate for automation.
-+ The geometry of the grounds polygons can be further improved by trying different generalization algorithms and by manual fixing.
-+ The data in this repository can be better managed by using a geodatabase or other more suitable format.
-
-** Topology Refactor
-+ Objectives:
-  - Fix the topology of the =settlements.geojson= file to allow for it to be used for further dataset improvements.
-+ More about topology rules and fixes [[http://wiki.gis.com/wiki/index.php/Topology][here]] or [[https://desktop.arcgis.com/en/arcmap/latest/manage-data/editing-topology/geodatabase-topology-rules-and-topology-error-fixes.htm][here]].
-
-+ Fixes:
-  - To determine the amount of fixes needed to the dataset I used the =Topology Checker= plugin for QGIS. 
-  - The check for gaps and overlaps yielded 247 errors. 
-  - The fixes were performed manually.
-
-[[./screenshots/topology_errors.png]]
-[[./screenshots/topology_errors_2.png]]
-
-** Administrative Layers Refactor
-+ Objectives:
-  - Generate polygon .geojson files from the fixed settlement boundary layer for municipalities and provinces in Bulgaria.
-  - Generate polygon .geojson files for the NUTS 0-3 levels using the created provinces files.
-  - Update the schema for all layers for consistency.
-  - Use EKATTE to fill in identifier fields for all layers.
 
 ** EKATTE Data Align
 + Objectives: 
   - Alignment between repository dataset and official data from EKATTE.
-
-*** Fixes:
-+ After joining the EKATTE table of all settlements to the settlement grounds I used the output of the non-matched settlements to query the EKATTE web site for the information of where those settlements belonged. I could not find this information easily mapped in any of the tables they provide to download so I had to do this operation manually. 
+    
++ Fixes: 
+  - After joining the EKATTE table of all settlements to the settlement grounds I used the output of the non-matched settlements to query the EKATTE web site for the information of where those settlements belonged. I could not find this information easily mapped in any of the tables they provide to download so I had to do this operation manually. 
 
 The resulting information is incorporated into the settlements layer: 
 [[./screenshots/shared_grounds.png]]
 
+  - Besides the populated places that share grounds with other settlements, there are also multiple populated places that no longer exist. To reflect those changes I used NSI's historical documentation data. The manual fixes to reflect EKATTE are shown in the table below:
 
-[[./screenshots/removed_admins.png]]
-+ Manual fixes to reflect EKATTE
 |-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
 | Settlement              | Obshtina   | Oblast      | Fix                                                                                                             |
 |-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
 | Budiltsi (06834)        | Kresna     | Blagoevgrad | Merged with Slivnitsa (67369)                                                                                   |
 | Balabanchevo (02322)    | Sungurlare | Burgas      | Merged with Sungurlare (70247)                                                                                  |
-| Zhelezari (29088)       | Omurtag    | Targovishte | Abolished. Polygon merged with Iliyno (32620)                                                                   |
+| Zhelezari (29088)       | Omurtag    | Targovishte | Closed. Polygon merged with Iliyno (32620)                                                             |
 | Vetren (29427)          | Burgas     | Burgas      | Merged with Burgas (07079)                                                                                      |
-| Kamensko (35924)        | Sungurlare | Burgas      | Abolished. Polygon merged with Manolich (47096)                                                                 |
+| Kamensko (35924)        | Sungurlare | Burgas      | Closed. Polygon merged with Manolich (47096)                                                           |
 | Rudnik (63183)          | Burgas     | Burgas      | Merged with Burgas (07079)                                                                                      |
 | Modren (68151)          | Dzhebel    | Kardzhali   | Merged with Mishevsko (48622)                                                                                   |
 | Fabrika (76011)         | Zlatograd  | Smolyan     | Merged with Startsevo (59344) because could not form multipart polygon with Zlatograd (data format restriction) |
-| Halovski kolibi (77133) | Boynitsa   | Vidin       | Abolished. Merged with Shishentsi (83329) because of proximity.                                                 |
+| Halovski kolibi (77133) | Boynitsa   | Vidin       | Closed. Merged with Shishentsi (83329) because of proximity.                                           |
 |-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
 
-** Merge Preparation
-+ Objective: 
-  - Prepare dataset for pull request.
-
-+ Directory structure updated:
-  - =data/= directory to hold datasets related to the geospatial layers.
-  - README file updates.
+[[./screenshots/removed_admins.png]]
 
 ** Resources:
 To perform the fixes detailed in this document I used the following resources:
