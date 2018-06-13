@@ -1,0 +1,6 @@
+* Some map examples using the updated dataset
+** Using the cleaned NSI-EKATTE dataset:
+[[grounds_by_ekt_altitude.png]]
+[[grounds_by_ekt_area.png]]
+[[grounds_by_ekt_category.png]]
+[[grounds_by_ekt_type.png]]

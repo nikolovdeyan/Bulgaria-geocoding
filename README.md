@@ -8,18 +8,20 @@ Geocoding Resources for Bulgaria
 This is a collection of resources that should help anyone working with geocoding or mapping data in Bulgaria.
 
 ## Overview
-The data in this repository has been organized around the administrative units in Bulgaria presented in `.geojson` file format. Since most statistical data is gathered and aggregated using those same entities, the organization of the files and data tables is convenient for mapping a variety of official sources of information. To make mapping as easy as possible seperate `.geojson` files have been extracted for the different admin levels. Each of them have the ids of the applicable statistical units (EKATTE in Bulgaria and NUTS on European level) associated with the polygon features.
+
+The data in this repository has been organized around the administrative units in Bulgaria presented in `.geojson` file format. Since most statistical data is gathered and aggregated using those same entities, the organization of the files and data tables is convenient for mapping a variety of official sources of information. To make mapping as easy as possible seperate `.geojson` files have been extracted for the different admin levels. Each of them have the ids of the applicable statistical units (EKATTE in Bulgaria and NUTS on European level) associated with the polygon features. 
 
 **Geospatial Layers Overview**
 
- | File                                         | Administrative Unit                   | NUTS Level | Feature Count |
- | --------------------------                   | ------------------------------------- | ---------  |   ----------- |
- | `country.geojson`                            | Country (Държава)                     | N/A        |             1 |
- | `regions.geojson`                            | Region (Район)                        | NUTS 1     |             2 |
- | `planning-regions.geojson`                   | Planning Region (Район за планиране)  | NUTS 2     |             6 |
- | `provinces.geojson`                          | Province (Област)                     | NUTS 3     |            28 |
- | `municipalities.geojson`                     | Municipality (Община)                 | LAU        |           265 |
- | [`settlements.geojson`](#settlementsgeojson) | Settlement Grounds (Землище)          | N/A        |          4611 |
+ | File                                                  | Administrative Unit                   | NUTS Level | Feature Count |
+ | ---------------------------------------------         | ------------------------------------- | ---------  |   ----------- |
+ | [`country.geojson`](#countrygeojson)                  | Country (Държава)                     | N/A        |             1 |
+ | [`regions.geojson`](#regionsgeojson)                  | Region (Район)                        | NUTS 1     |             2 |
+ | [`planning-regions.geojson`](#planningregionsgeojson) | Planning Region (Район за планиране)  | NUTS 2     |             6 |
+ | [`provinces.geojson`](#provincesgeojson)              | Province (Област)                     | NUTS 3     |            28 |
+ | [`municipalities.geojson`](#municipalitiesgeojson)    | Municipality (Община)                 | LAU        |           265 |
+ | [`settlements.geojson`](#settlementsgeojson)          | Settlement Grounds (Землище)          | N/A        |          4611 |
+ |                                                       |                                       |            |               |
  
 Besides the geospatial information outlined above, we also make an effort to provide some official datasets with attribute information that can be immediately joined to the polygons of the administrative units for mapping and analysis. Those datasets are located in the `data/` directory and are presented as `.csv` files along with a respectful `.csvt` files that contain metainformation about their column data types.
 
