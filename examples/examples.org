@@ -1,6 +1,13 @@
 * Some map examples using the updated dataset
 ** Using the cleaned NSI-EKATTE dataset:
++ Settlement grounds by altitude category:
 [[grounds_by_ekt_altitude.png]]
+
++ Settlement grounds by area category:
 [[grounds_by_ekt_area.png]]
+
++ Settlement grounds by category:
 [[grounds_by_ekt_category.png]]
+
++ Settlement grounds by settlement type:
 [[grounds_by_ekt_type.png]]
