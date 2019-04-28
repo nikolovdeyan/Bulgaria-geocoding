@@ -29,12 +29,12 @@ Besides the geospatial information outlined above, we also make an effort to pro
 
  | File Name                     | Description                                              | Record Count |
  | ----------------------------- | -------------------------------------------------------- | ------------ |
- | `ekatte_enhanced_06-2018.csv` | EKATTE official info enhanced with additional attributes |         5257 |
+ | `ekatte_enhanced_06-2018.csv` | EKATTE official info enhanced with additional attributes |         5256 |
  | `census_data_settlements.csv` | Historical census data on settlement level               |         5356 |
  
 **Notes on the number of settlements/grounds discrepancy**:
 
-According to the latest data in the [National Registre of Populated Places](http://www.nsi.bg/nrnm/index.php?i=1&ezik=en), there are **5256 populated places in Bulgaria**, 257 cities, 4997 villages, and 2 monasteries. However the `settlements.geojson` file contains only 4611 polygons. The missing 645 settlements are sharing grounds with other settlements, or to be more precise, are located in the grounds of another settlements and their area is listed as 0. There are 230 entities that contain entries under the `CONTAINS_EKATTE_IDS` column where the missing settlements are listed. Those are illustrated on the map below:
+According to the latest data in the [National Registre of Populated Places](http://www.nsi.bg/nrnm/index.php?i=1&ezik=en), there are **5256 populated places in Bulgaria**, 257 cities, 4997 villages, and 2 monasteries. However the `settlements.geojson` file contains only 4616 polygons. The missing 640 settlements are sharing grounds with other settlements, or to be more precise, are located in the grounds of another settlements and their area is listed as 0. The one-to-many relationship between the parent settlement (which has a grounds polygon) and the children settlements belonging to it can be established using the `rel_settl_ground.csv` file, which contains the 226 distinct parent settlement grounds along with the IDs of their children. Those are illustrated on the map below:
 
 ![Populated places sharing grounds](screenshots/shared_grounds.png)
 
@@ -46,7 +46,6 @@ This is a simplified version of the territorial separation of Bulgaria among the
 
 | Field               | Data Type | Contains                                                           |
 | -----------------   | --------- | ------------------------------------------------------------------ |
-| CONTAINS_EKATTE_IDS | String    | List of populated places that belong to this grounds polygon       |
 | EKATTE_ID           | String    | The ID given to this administrative unit in EKATTE                 |
 | LAU_CODE            | String    | The code of the Obstina (Municipality) this settlement belongs to. |
 | NAME_BG             | String    | Name in Bulgarian                                                  |

@@ -48,7 +48,7 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
 | Planning Region      | Район за планиране | NUTS 2     | =planning-regions.eeojson= |   |           6 |
 | Province             | Област             | NUTS 3     | =provinces.geojson=        |   |          28 |
 | Municipality         | Община             | LAU        | =municipalities.geojson=   |   |         265 |
-| Settlement Ground    | Землище            | /N/A/        | =settlements.geojson=      |   |        4614 |
+| Settlement Ground    | Землище            | /N/A/        | =settlements.geojson=      |   |        4615 |
 |----------------------+--------------------+------------+--------------------------+---+-------------|
 
 ** EKATTE Data Align
@@ -56,28 +56,50 @@ This sheet provides an insight of the fixes done to the Bulgaria Mapping Dataset
   - Alignment between repository dataset and official data from EKATTE.
     
 + Fixes: 
-  - After joining the EKATTE table of all settlements to the settlement grounds I used the output of the non-matched settlements to query the EKATTE web site for the information of where those settlements belonged. I could not find this information easily mapped in any of the tables they provide to download so I had to do this operation manually. 
+  - After joining the EKATTE table of all settlements to the settlement grounds I used the output of the non-matched settlements to query the NSI web site for the information of where those settlements belonged. I could not find this information easily mapped in any of the tables they provide to download so I had to do this operation manually. 
 
 The resulting information is incorporated into the settlements layer: 
 [[./screenshots/shared_grounds.png]]
 
-  - Besides the populated places that share grounds with other settlements, there are also multiple populated places that no longer exist. To reflect those changes I used NSI's historical documentation data. The manual fixes to reflect EKATTE are shown in the table below:
+  - Besides the populated places that share grounds with other settlements, there are also multiple populated places that have changed status (no longer exist for example). To reflect those changes I used NSI's historical documentation data. The manual fixes to reflect EKATTE are shown in the table below:
 
-|-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
-| Settlement              | Obshtina   | Oblast      | Fix                                                                                                             |
-|-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
-| Budiltsi (06834)        | Kresna     | Blagoevgrad | Merged with Slivnitsa (67369)                                                                                   |
-| Balabanchevo (02322)    | Sungurlare | Burgas      | Merged with Sungurlare (70247)                                                                                  |
-| Zhelezari (29088)       | Omurtag    | Targovishte | Closed. Polygon merged with Iliyno (32620)                                                             |
-| Vetren (29427)          | Burgas     | Burgas      | Merged with Burgas (07079)                                                                                      |
-| Kamensko (35924)        | Sungurlare | Burgas      | Closed. Polygon merged with Manolich (47096)                                                           |
-| Rudnik (63183)          | Burgas     | Burgas      | Merged with Burgas (07079)                                                                                      |
-| Modren (68151)          | Dzhebel    | Kardzhali   | Merged with Mishevsko (48622)                                                                                   |
-| Fabrika (76011)         | Zlatograd  | Smolyan     | Merged with Startsevo (59344) because could not form multipart polygon with Zlatograd (data format restriction) |
-| Halovski kolibi (77133) | Boynitsa   | Vidin       | Closed. Merged with Shishentsi (83329) because of proximity.                                           |
-|-------------------------+------------+-------------+-----------------------------------------------------------------------------------------------------------------|
+|----------------------------+--------------+--------------+-----------------------------------------------------------------------------------------------------------------|
+| Settlement                 | Obshtina     | Oblast       | Fix                                                                                                             |
+|----------------------------+--------------+--------------+-----------------------------------------------------------------------------------------------------------------|
+| Budiltsi (06834)           | Kresna       | Blagoevgrad  | Merged with Slivnitsa (67369)                                                                                   |
+| Balabanchevo (02322)       | Sungurlare   | Burgas       | Merged with Sungurlare (70247)                                                                                  |
+| Zhelezari (29088)          | Omurtag      | Targovishte  | Closed. Polygon merged with Iliyno (32620)                                                                      |
+| Vetren (29427)             | Burgas       | Burgas       | Merged with Burgas (07079)                                                                                      |
+| Kamensko (35924)           | Sungurlare   | Burgas       | Closed. Polygon merged with Manolich (47096)                                                                    |
+| Rudnik (63183)             | Burgas       | Burgas       | Merged with Burgas (07079)                                                                                      |
+| Modren (68151)             | Dzhebel      | Kardzhali    | Merged with Mishevsko (48622)                                                                                   |
+| Fabrika (76011)            | Zlatograd    | Smolyan      | Merged with Startsevo (59344) because could not form multipart polygon with Zlatograd (data format restriction) |
+| Halovski kolibi (77133)    | Boynitsa     | Vidin        | Closed. Merged with Shishentsi (83329) because of proximity.                                                    |
+|----------------------------+--------------+--------------+-----------------------------------------------------------------------------------------------------------------|
+| *Fixes 04.2019:*             |              |              |                                                                                                                 |
+| Dinkovo (21193)            | Ruzhintsi    | Vidin        | Add missing grounds polygon for vill. Dinkovo, adjusted Municipality Ruzhintsi borders to accommodate it.       |
+| Ridovo (62668)             | Kardzhali    | Kardzhali    | Add missing grounds polygon for vill. Ridovo, split from Penyovo.                                               |
+| Tsatsarovtsi (78241)       | Zlatograd    | Smolyan      | Recreated the polygon for vill. Fabrika (76011), it now serves as grounds for vill. Tsatsarovtsi.               |
+| Novoseltsi (52283)         | Vidin        | Vidin        | Merged with Vidin (10971).                                                                                      |
+| Starozagorski bani (68970) | Stara Zagora | Stara Zagora | Merged with Sulitsa (70202).                                                                                    |
+|----------------------------+--------------+--------------+-----------------------------------------------------------------------------------------------------------------|
 
-[[./screenshots/removed_admins.png]]
++ Result:
+  - with all fixes applied we can account for all settlements available in the official register of populated places:
+  
+|---------------------------------------------------+---------------|
+| Layer                                             | Num. Features |
+|---------------------------------------------------+---------------|
+| Settlement Grounds                                |          4615 |
+| Settlements located in other settlements' grounds |           641 |
+|---------------------------------------------------+---------------|
+| Total settlements cound in official EKATTE source |          5256 |
+|---------------------------------------------------+---------------|
+
+
+** Further Fixes to Consider:
++ Query and fix artifact multipart polygons. Query the smallest polygons by area and check their integrity.
++ Check polygons' area against the official source and fix those that have largest discrepencies.
 
 ** Resources:
 To perform the fixes detailed in this document I used the following resources:
@@ -91,7 +113,6 @@ To perform the fixes detailed in this document I used the following resources:
   - QGIS 2.18
   - LibreOffice 6.0
   - GIMP 2.10
-  - Spacemacs
   - Python 3.6
 
 ** References
