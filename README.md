@@ -13,15 +13,16 @@ The data in this repository has been organized around the administrative units i
 
 **Geospatial Layers Overview**
 
- | File                                                  | Administrative Unit                   | NUTS Level | Feature Count |
- | ---------------------------------------------         | ------------------------------------- | ---------  |   ----------- |
- | [`country.geojson`](#countrygeojson)                  | Country (Държава)                     | N/A        |             1 |
- | [`regions.geojson`](#regionsgeojson)                  | Region (Район)                        | NUTS 1     |             2 |
- | [`planning-regions.geojson`](#planningregionsgeojson) | Planning Region (Район за планиране)  | NUTS 2     |             6 |
- | [`provinces.geojson`](#provincesgeojson)              | Province (Област)                     | NUTS 3     |            28 |
- | [`municipalities.geojson`](#municipalitiesgeojson)    | Municipality (Община)                 | LAU        |           265 |
- | [`settlements.geojson`](#settlementsgeojson)          | Settlement Grounds (Землище)          | N/A        |          4611 |
- |                                                       |                                       |            |               |
+ | File                                                  | Administrative Unit                                | NUTS Level | Feature Count |
+ | ---------------------------------------------         | -------------------------------------              | ---------  |   ----------- |
+ | [`country.geojson`](#countrygeojson)                  | Country (Държава)                                  | N/A        |             1 |
+ | [`regions.geojson`](#regionsgeojson)                  | Region (Район)                                     | NUTS 1     |             2 |
+ | [`planning-regions.geojson`](#planningregionsgeojson) | Planning Region (Район за планиране)               | NUTS 2     |             6 |
+ | [`provinces.geojson`](#provincesgeojson)              | Province (Област)                                  | NUTS 3     |            28 |
+ | [`municipalities.geojson`](#municipalitiesgeojson)    | Municipality (Община)                              | LAU        |           265 |
+ | [`grounds.geojson`](#groundsgeojson)                  | Settlement Grounds (Землище)                       | N/A        |          4611 |
+ | settlements.csv                                       | Settlements (derived from EKATTE, no geometry yet) | N/A        |          5256 |
+ |                                                       |                                                    |            |               |
  
 Besides the geospatial information outlined above, we also make an effort to provide some official datasets with attribute information that can be immediately joined to the polygons of the administrative units for mapping and analysis. Those datasets are located in the `data/` directory and are presented as `.csv` files along with a respectful `.csvt` files that contain metainformation about their column data types.
 
@@ -34,14 +35,14 @@ Besides the geospatial information outlined above, we also make an effort to pro
  
 **Notes on the number of settlements/grounds discrepancy**:
 
-According to the latest data in the [National Registre of Populated Places](http://www.nsi.bg/nrnm/index.php?i=1&ezik=en), there are **5256 populated places in Bulgaria**, 257 cities, 4997 villages, and 2 monasteries. However the `settlements.geojson` file contains only 4616 polygons. The missing 640 settlements are sharing grounds with other settlements, or to be more precise, are located in the grounds of another settlements and their area is listed as 0. The one-to-many relationship between the parent settlement (which has a grounds polygon) and the children settlements belonging to it can be established using the `rel_settl_ground.csv` file, which contains the 226 distinct parent settlement grounds along with the IDs of their children. Those are illustrated on the map below:
+According to the latest data in the [National Registre of Populated Places](http://www.nsi.bg/nrnm/index.php?i=1&ezik=en), there are **5256 populated places in Bulgaria**, 257 cities, 4997 villages, and 2 monasteries. However the `grounds.geojson` file contains only 4615 polygons. The missing 641 settlements are sharing grounds with other settlements, or to be more precise, are located in the grounds of another settlements and their area is listed as 0. The one-to-many relationship between the parent settlement (which has a grounds polygon) and the children settlements belonging to it can be established using the `rel_settl_ground.csv` file, which contains the 226 distinct parent settlement grounds along with the IDs of their children. Those are illustrated on the map below:
 
 ![Populated places sharing grounds](screenshots/shared_grounds.png)
 
 For more information, check http://yurukov.net/blog/2015/03/16/zemlishta/ (in Bulgarian)
 
 ## Geospatial Data
-### `settlements.geojson`
+### `grounds.geojson`
 This is a simplified version of the territorial separation of Bulgaria among the grounds of settlements. The shapes do not reflect accurately the actual grounds or their overall size. They do match them within reasonable margin of error, which would be enough for most visualization purposes. More accurate maps can be obtained from the national Cadastre office.
 
 | Field               | Data Type | Contains                                                           |
